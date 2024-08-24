@@ -1,9 +1,9 @@
 @extends('admin.maintemplate')
 @section('content')
-    <div class="card-header">
-        Edit DPM Fakultas Kedokteran
-    </div>
-    <div class="content">
+    <div class="card">
+        <div class="card-header">
+            Edit DPM Fakultas Kedokteran
+        </div>
         <div class="card-body">
             <form action="{{ route('dpm-fk.update', $id) }}" method="POST" enctype="multipart/form-data">
                 @method('put')
@@ -30,44 +30,84 @@
                             <label for="prodi">Foto DPM</label>
                         </div>
                         <div class="col-12">
-                            <img src="{{ asset('storage/' . $data->foto) }}" width="150" height="200"
-                                class="img-preview">
+                            <div class="img-container">
+                                <img src="{{ asset('storage/' . $data->foto) }}" width="150" height="200" class="img-preview">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="foto">Upload Foto Presma</label>
-                    <p style="font-weight: bold"> Ingin mengganti foto persma ? </p>
+                    <label for="foto">Upload Foto DPM</label>
+                    <p style="font-weight: bold"> Ingin mengganti foto DPM? </p>
                     <input type="hidden" name="oldFoto" value="{{ $data->foto }}">
-                    <input type="file" id="foto" name="foto"
-                        class="form-control-file @error('foto') is-invalid 
-                @enderror" placeholder="foto"
-                        onchange="previewimage()">
-                    @error('foto')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <div class="custom-file">
+                        <input type="file" id="foto" name="foto" class="custom-file-input @error('foto') is-invalid @enderror" onchange="previewimage()">
+                        <label class="custom-file-label" for="foto">Pilih File</label>
+                        @error('foto')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-success btn-sm shadow-sm">Update</button>
+                <div class="form-group text-right">
+                    <button class="btn btn-success">Update</button>
                 </div>
             </form>
         </div>
     </div>
 @endsection
+
+<style>
+    .img-container {
+        position: relative;
+        width: 150px;
+        height: 200px;
+        overflow: hidden;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    .img-container:hover {
+        border-color: #6c757d;
+    }
+
+    .img-preview {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .img-container:hover .img-preview {
+        transform: scale(1.1);
+    }
+
+    .custom-file-label::after {
+        content: 'Pilih';
+    }
+
+    .custom-file-input:lang(en)~.custom-file-label::after {
+        content: 'Choose';
+    }
+</style>
+
 <script>
     function previewimage() {
-        const image = document.querySelector('#foto')
-        const imgPreview = document.querySelector('.img-preview')
+        const image = document.querySelector('#foto');
+        const imgPreview = document.querySelector('.img-preview');
 
-        imgPreview.style.display = 'block'
-        const ofReader = new FileReader()
+        imgPreview.style.display = 'block';
+        const reader = new FileReader();
 
-        ofReader.readAsDataURL(image.files[0])
-        ofReader.onload = function(oFREvent) {
-            imgPreview.src = oFREvent.target.result
-        }
+        reader.onload = function (e) {
+            imgPreview.src = e.target.result;
+        };
 
+        reader.readAsDataURL(image.files[0]);
     }
 </script>

@@ -16,7 +16,7 @@
     <div class="login">
         <div class="login-screen">
             <div class="app-title">
-                <h1>Problem ?</h1>
+                <h1 style="color: white">Problem?</h1>
             </div>
             <form method="POST" action="{{ route('kirimAdmin') }}">
                 @csrf
@@ -66,14 +66,14 @@
                     @enderror
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="nomor_wa" id="flexRadioDefault1"
-                            value="6282198105505">
+                            value="628988624093">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Fakultas Kedokteran
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="nomor_wa" id="flexRadioDefault2"
-                            value="6287863214510" checked>
+                            value="628988624093" checked>
                         <label class="form-check-label" for="flexRadioDefault2">
                             Fakultas Ilmu Kesehatan
                         </label>

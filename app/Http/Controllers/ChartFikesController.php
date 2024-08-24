@@ -4,36 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\HasilVotingFikes;
 use Illuminate\Http\Request;
+use App\Repositories\DpmFikes\DpmFikesRepository;
 
 class ChartFikesController extends Controller
 {
+
+    protected $dpmFikesRepository;
+    public function __construct(DpmFikesRepository $dpmFikesRepository) {
+        $this->dpmFikesRepository = $dpmFikesRepository;
+    }
     public function chartDpmFikes()
     {
-        $data = HasilVotingFikes::with('dpm')->get();
-        $tampung = [];
-        foreach ($data as $value) {
-            $name = @$value->presma->nama ?? 'kosong';
-            $id_presma = $value->presma_id;
-            $hasil = HasilVotingFikes::where('presma_id', $id_presma)->count();
-            $a['name'] = $name;
-            $a['y'] = $hasil;
-            array_push($tampung, $a);
-        }
+        $tampung = $this->dpmFikesRepository->chartDPM();
         return view('admin.fikes.dpm.chart', compact('tampung'));
     }
 
     public function chartPresmaFikes()
     {
-        $data = HasilVotingFikes::with('presma')->get();
-        $tampung = [];
-        foreach ($data as $value) {
-            $name = @$value->presma->nama ?? 'kosong';
-            $id_presma = $value->presma_id;
-            $hasil = HasilVotingFikes::where('presma_id', $id_presma)->count();
-            $a['name'] = $name;
-            $a['y'] = $hasil;
-            array_push($tampung, $a);
-        }
+        $tampung = $this->dpmFikesRepository->chartPresma();
         return view('admin.fikes.presma.chart', compact('tampung'));
     }
     public function record()

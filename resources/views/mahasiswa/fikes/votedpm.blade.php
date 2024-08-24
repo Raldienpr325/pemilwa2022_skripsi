@@ -1,13 +1,12 @@
 @extends('admin.maintemplate')
 @section('content')
     <center>
-        <h1 style="padding-top:30px;font-family:Monaco,Helvetica, sans-serif"><strong> Dewan Perwakilan Mahasiswa
-            </strong>
+        <h1 style=padding-top:30px;font-family:Arial, Helvetica, sans-serif"><strong> Dewan Perwakilan
+                Mahasiswa</strong>
         </h1>
-        <p style="font-family: Arial, Helvetica, sans-serif">Fakultas Ilmu Kesehatan Universitas Brawijaya</p>
+        <p style="font-family: Arial, Helvetica, sans-serif">Fakultas Kedokteran Universitas Brawijaya</p>
     </center>
-    <!-- Button trigger modal -->
-    @if ($dpm->dpm_id != null)
+    @if (@$dpm->dpm_id != null)
         <div align="center" style="padding: 100px;font-family:georgia,garamond,serif;font-size:16px;font-style:italic">
             <h1> Terima kasih Atas Suara Anda ! </h1>
         </div>
@@ -76,24 +75,27 @@
                 @foreach ($dataFikes as $item)
                     <center>
                         <div class="col-md-4 p-md-4 ">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ asset('storage/' . $item->foto) }}" class="card-img-top" alt="fotoDPMFK">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <h3>{{ $item->nama }} ( {{ $item->nourut }} )</h3>
-                                    </h5>
-                                    <p class="card-text"> Prodi {{ $item->prodi }} | Angkatan {{ $item->angkatan }}</p>
 
-                                    <button type="button" class="glow-on-hover" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop{{ $item->id }}">Vote</button>
+                            <div class="custom-card" style="width: 18rem;">
+                                <div class="circle-icon">
+                                    <p class="circle-icon-text">{{ $item->nourut }}</p>
+                                </div>
+                                <img src="{{ asset('storage/' . $item->foto) }}" class="card-img-top" alt="fotoDPMFK">
+                                <div class="custom-card-body">
+                                    <h5 class="card-title">{{ $item->nama }}</h5>
+                                    <p class="card-text">  {{ $item->prodi }} | Angkatan {{ $item->angkatan }}</p>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button type="button" class="btn btn-primary vote-btn" onclick="showConfirmation({{ $item->id }})">Vote</button>
                                 </div>
                             </div>
+
                         </div>
                     </center>
                     <form action="{{ route('storeVoting4', $item->id) }}" id="voting" method="post">
                         @method('POST')
                         @csrf
-                        <div class="modal fade" id="staticBackdrop{{ $item->id }}" data-bs-backdrop="static"
+                        <div class="modal fade" id="dpmfk{{ $item->id }}" data-bs-backdrop="static"
                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
@@ -122,111 +124,142 @@
             </div>
         </div>
     @endif
-
     <style>
-        .card-img-top {
-            height: 350px;
-            widows: 120px;
+        .custom-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            overflow: hidden;
         }
 
-        .card {
-            animation: fadeInAnimation ease 1s;
-            animation-iteration-count: 1;
-            animation-fill-mode: forwards;
+        .custom-card:hover {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-
-        @keyframes fadeInAnimation {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
+        .custom-card-header {
+            padding: 10px;
+            text-align: center;
         }
 
-        .glow-on-hover {
-            width: 90px;
-            height: 50px;
+        .card-title {
+            margin-bottom: 0;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .vote-btn {
+            width: 100%;
+            height: 40px;
             border: none;
             outline: none;
             color: #fff;
-            background: #111;
+            background-color: #3498db;
             cursor: pointer;
             position: relative;
             z-index: 0;
-            border-radius: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
         }
 
-        .glow-on-hover:before {
-            content: '';
-            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            background-size: 400%;
-            z-index: -1;
-            filter: blur(5px);
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
-            animation: glowing 20s linear infinite;
-            opacity: 0;
-            transition: opacity .3s ease-in-out;
-            border-radius: 10px;
-        }
-
-        .glow-on-hover:active {
-            color: #000
-        }
-
-        .glow-on-hover:active:after {
-            background: transparent;
-        }
-
-        .glow-on-hover:hover:before {
-            opacity: 1;
-        }
-
-        .glow-on-hover:after {
-            z-index: -1;
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #111;
-            left: 0;
-            top: 0;
-            border-radius: 10px;
+        .vote-btn:hover {
+            background-color: #2980b9;
         }
 
         .img-fluid {
-            width: 400px;
-            height: 480px;
+            width: 100%;
+            object-fit: cover;
         }
 
-        :root {
-            --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
+        /* Truncate long names */
+        .card-title {
+            margin-bottom: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 10px;
         }
 
-        body {
-            background: #111 !important;
+        .circle-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: #fff;
+            font-weight: bold;
         }
 
-        .card {
-            background: #222;
-            border: 1px solid #dd2476;
-            color: rgba(250, 250, 250, 0.8);
-            margin-bottom: 2rem;
+        .circle-icon-text {
+            margin: 0;
         }
+        .custom-card .card-img-top {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
     <script>
-        < script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity = "sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin = "anonymous" >
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous">
-    </script>
-    </script>
+            window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.custom-card');
+            cards.forEach((card, index) => {
+                gsap.from(card, {
+                    delay: index * 0.1,
+                    y: 100,
+                    opacity: 0,
+                    duration: 2.5,
+                    ease: 'power4.out',
+                });
+            });
+        });
+        function showConfirmation(id) {
+            $.ajax({
+                url: '{{ route("searchDpmFikes",":id") }}'.replace(':id',id),
+                data: {
+                    id:id
+                },
+                type : 'GET',
+                success:function(data){
+                    console.log(data)
+                    Swal.fire({
+                        title: "Apakah anda yakin dengan pilihan anda?",
+                        text:
+                              "Nama: " + data.nama + "\n" +
+                              "Prodi: " + data.prodi + "\n" +
+                              "Angkatan: " + data.angkatan,
+                        icon: "info",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yakin",
+                        customClass: {
+                            title: "my-swal-title",
+                            htmlContainer: "my-swal-html-container"
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById("voting_" + id).submit();
+                        }
+                    });
+                }
+            })
+
+
+         }
+
+     </script>
 @endsection

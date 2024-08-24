@@ -19,16 +19,18 @@ class DatadummySeeder extends Seeder
         PresmaFK::Create([
             'nourut' => '1',
             'nama' => 'aldien',
+            'nama_wakil' => 'aldien 2',
             'angkatan' => '2020',
             'prodi' => 'FK',
-            'foto' => '/'
+            'foto' => '/',
+            'foto_wakil' => '/'
         ]);
         DpmFK::Create([
             'nourut' => '1',
             'nama' => 'aldien',
             'angkatan' => '2020',
             'prodi' => 'FK',
-            'foto' => '/'
+            'foto' => '/',
         ]);
     }
 }

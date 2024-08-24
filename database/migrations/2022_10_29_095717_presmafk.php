@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->integer('nourut');
             $table->string('nama');
+            $table->string('nama_wakil');
             $table->integer('angkatan');
             $table->string('prodi');
             $table->string('foto');
+            $table->string('foto_wakil');
             $table->timestamps();
         });
     }

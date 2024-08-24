@@ -16,7 +16,7 @@ class TokenSeeder extends Seeder
      */
     public function run()
     {
-        
+
         TokenUser::create([
             'token' => 789876,
             'name' => strtoupper('WISNU BARLIANTO'),

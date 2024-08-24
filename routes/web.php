@@ -32,8 +32,8 @@ Route::get('/userlogout', function () {
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [HomeController::class, 'index'])->middleware('guest')->name('home');
     Route::get('login-admin', [HomeController::class, 'LoginAdmin'])->name('login-admin');
-    Route::get('login-khusus',  [HomeController::class, 'LoginKhusus'])->name('loginkhusus');
-    Route::POST('handle-login-khusus',  [HomeController::class, 'HandleLoginKhusus'])->name('handleloginkhusus');
+    Route::get('login-khusus', [HomeController::class, 'LoginKhusus'])->name('loginkhusus');
+    Route::post('handle-login-khusus', [HomeController::class, 'HandleLoginKhusus'])->name('handleloginkhusus');
     Route::get('chat-admin', [HomeController::class, 'ChatAdmin'])->name('chatadmin');
     Route::post('kirim-admin', [HomeController::class, 'kirimAdmin'])->name('kirimAdmin');
     Route::post('handle-admin-login', [HomeController::class, 'handleAdmin'])->name('handle-admin');
@@ -41,8 +41,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('login-mahasiswa', [LoginGoogleMahasiswa::class, 'LoginUser'])->name('login-mahasiswa');
     Route::get('/auth/callback', [LoginGoogleMahasiswa::class, 'HandleCallbackGoogle']);
 });
-
-
 
 
 //Route Untuk User
@@ -60,6 +58,10 @@ Route::group(['middleware' => 'pemilih'], function () {
     Route::get('mahasiswa-fikes-vote-dpm', [VotingController::class, 'votingDpmFikes'])->name('votingDpmFikes');
     Route::post('store-voting3/{id}', [VotingController::class, 'storeVoting3'])->name('storeVoting3');
     Route::post('store-voting4/{id}', [VotingController::class, 'storeVoting4'])->name('storeVoting4');
+    Route::get('search-presma/{id}', [VotingController::class, 'searchPresmaById'])->name('searchPresmaId');
+    Route::get('search-dpm/{id}', [VotingController::class, 'searchDpmFK'])->name('searchDpmFK');
+    Route::get('search-presma-fikes/{id}', [VotingController::class, 'searchPresmaFikesById'])->name('searchPresmaFikesId');
+    Route::get('search-dpm-fikes/{id}', [VotingController::class, 'searchDpmFikes'])->name('searchDpmFikes');
 });
 // });
 

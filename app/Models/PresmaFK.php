@@ -9,5 +9,5 @@ class PresmaFK extends Model
 {
     use HasFactory;
     protected $table = "presmafk";
-    protected $fillable = ['nourut','nama','prodi','angkatan','foto'];
+    protected $fillable = ['nourut','nama','prodi','angkatan','foto','nama_wakil','foto_wakil'];
 }

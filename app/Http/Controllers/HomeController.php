@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Admin;
 use App\Models\User;
 use App\Models\HasilVotingFk;
 use Illuminate\Support\Facades\Hash;
@@ -81,16 +80,11 @@ class HomeController extends Controller
                     Auth::guard('user')->attempt([
                         'email' => $ambil_data->email,
                         'password' => $ambil_data->password
-                ]);
-    
-                HasilVotingFk::firstOrCreate([
-                    'users_id' => auth('user')->user()->id,
-                ], ['users_id' => auth('user')->user()->id,]);
-
+                    ]);
                 return redirect()->route('votingPresmaFk');
             }
 
-            
+
             User::Create([
                 'name' => $ambil_data->name,
                 'given_name' => $ambil_data->given_name,
@@ -113,6 +107,8 @@ class HomeController extends Controller
 
             return redirect()->route('votingPresmaFk');
 
+        }else{
+            return redirect()->back();
         }
 
     }

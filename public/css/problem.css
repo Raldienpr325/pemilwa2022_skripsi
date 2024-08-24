@@ -1,103 +1,76 @@
-* {
-    box-sizing: border-box;
-}
-
-*:focus {
-    outline: none;
-}
-
 body {
-    font-family: Arial;
-    height: 100%;
-    padding: 50px;
+    background-color: #0c1126;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     background: url('../img/bg-pemilwa2022.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    font-family: "poppins";
-    font-size: 22px;
 }
 
 .login {
-    margin: 50px auto;
-    width: 300px;
-}
-
-.login-screen {
-    background-color: rgba(255, 255, 255, 0.904);
-    padding: 20px;
-    padding-top: 1px;
+    background-color: #252a47;
+    width: 400px;
+    padding: 30px;
     border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.438),
-        0 6px 20px 0 rgba(255, 255, 255, 0.514);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .app-title {
     text-align: center;
-    color: #777;
-    font-family: "poppins";
+    margin-bottom: 30px;
 }
 
-.login-form {
-    text-align: center;
+.app-title h1 {
+    font-size: 30px;
+    margin: 0;
 }
 
-.control-group {
-    margin-bottom: 10px;
+.login-form .control-group {
+    margin-bottom: 20px;
 }
 
-input {
-    text-align: center;
-    background-color: #ecf0f1;
-    border: 2px solid transparent;
-    border-radius: 3px;
+.login-form .control-group .login-field {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
     font-size: 16px;
-    font-weight: 200;
-    padding: 10px 0;
-    width: 250px;
-    transition: border 0.5s;
+    transition: border-bottom-color 0.3s;
 }
 
-input:focus {
-    border: 2px solid #3498db;
-    box-shadow: none;
+.login-form .control-group .login-field:focus {
+    outline: none;
+    border-bottom-color: #4e73df;
 }
 
-.btn {
-    border: 2px solid transparent;
-    background: #3498db;
-    color: #ffffff;
-    font-size: 16px;
-    line-height: 25px;
-    padding: 10px 0;
-    text-decoration: none;
-    text-shadow: none;
-    border-radius: 3px;
-    box-shadow: none;
-    transition: 0.25s;
-    display: block;
-    width: 250px;
-    margin: 0 auto;
-    font-family: "poppins";
-    font-size: 20px;
+.login-form .login-field-icon {
+    color: #fff;
+    font-size: 18px;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
-.btn:hover {
-    background-color: #2980b9;
+.login-form .btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+    width: 100%;
 }
 
-.login-link {
-    font-size: 12px;
-    color: #444;
-    display: block;
-    margin-top: 12px;
+.login-form .btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2e59d9;
 }
 
-@media (max-width: 480px) {
-    body {
-        font-family: Arial;
-        background-image: url("https://3.bp.blogspot.com/-NmC6GIpYEG0/UQ5YRLDa_TI/AAAAAAAAACc/ZfN1zcPMfJU/s1600/DSC_1704.JPG");
-        padding: 10px;
-    }
+.login-form .invalid-feedback {
+    color: #dc3545;
+    font-size: 14px;
+}
+
+.login-form .form-check-label {
+    color: #fff;
+    font-size: 14px;
 }

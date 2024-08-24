@@ -7,9 +7,15 @@ use App\Models\SemuaMahasiswaFikes;
 use App\Imports\AllMahasiswaFikes;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Psikb\PsikbRepository;
 
 class AdminControllerFIKES extends Controller
 {
+    protected $psikbsRepository;
+
+    public function __construct(PsikbRepository $psikbRepository) {
+        $this->psikbsRepository = $psikbRepository;
+    }
     public function RecordPSIKL()
     {
         $datapemilih = DB::table('mahasiswapsikls')->get();

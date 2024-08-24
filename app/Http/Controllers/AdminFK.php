@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PresmaRequest;
 use Illuminate\Http\Request;
-use App\Models\PresmaFK;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use App\Repositories\Testing\TestingRepository;
 use Alert;
 use App\Exports\UsersPSKED;
 use App\Imports\AllMahasiswaKedokteran;
@@ -13,26 +13,51 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Models\SemuaMahasiswaKedokteran;
 use Illuminate\Support\Facades\Storage;
-
+use App\Repositories\PresmaFK\PresmaFKRepository;
+use App\Repositories\Psked\PskedRepository;
+use App\Repositories\Pskb\PskbRepository;
+use App\Repositories\Pssf\PssfRepository;
 class AdminFK extends Controller
 {
+
+    protected $presmaFKRepository;
+    protected $pskedRepository;
+    protected $testing;
+    protected $pskbsRepository;
+    protected $pssfRepository;
+
+    public function __construct(
+            TestingRepository $testing,
+            PresmaFKRepository $presmaFKRepository,
+            PskedRepository $pskedRepository,
+            PskbRepository $pskbsRepository,
+            PssfRepository $pssfRepository,
+        ) {
+
+        $this->testing = $testing;
+        $this->presmaFKRepository = $presmaFKRepository;
+        $this->pskedRepository = $pskedRepository;
+        $this->pskbsRepository = $pskbsRepository;
+        $this->pssfRepository = $pssfRepository;
+    }
     public function DashboardAdmin()
     {
+        $alert =  Alert::success('Selamat Datang', 'Kamu Berhasil Login Admin');
         if (auth('admin')->user()->nama == "Admin FK") {
-            Alert::success('Selamat Datang', 'Kamu Berhasil Login Admin');
+            $alert;
             return redirect('presma-fk');
         } else if (auth('admin')->user()->nama == "Admin FIKES") {
-            Alert::success('Selamat Datang', 'Kamu Berhasil Login Admin');
+            $alert;
             return redirect('presma-fikes');
         } else if (auth('admin')->user()->nama == "Super Admin") {
-            Alert::success('Selamat Datang', 'Kamu Berhasil Login Admin');
+            $alert;
             return redirect('presma-fk');
         }
     }
 
     public function index()
     {
-        $datapresmafk = DB::table('presmafk')->get();
+        $datapresmafk = $this->presmaFKRepository->getAllData();
         return view('admin.kedokteran.presma.presma', compact('datapresmafk'));
     }
 
@@ -41,68 +66,51 @@ class AdminFK extends Controller
         return view('admin.kedokteran.presma.input');
     }
 
-    public function store(Request $request)
+    public function store(PresmaRequest $request)
     {
-        $data_presma = $request->validate([
-            'nama' => 'required',
-            'angkatan' => 'required',
-            'prodi' => 'required',
-            'nourut' => 'required',
-            'foto' => 'image|file|max:5000',
-        ]);
+        $data_presma = $request->store();
+        $operation = $this->presmaFKRepository->store($data_presma);
 
-        $data_presma['foto'] = $request->file('foto')->store('foto-presma-fk');
+        if($operation){
+            Alert::success('Berhasil', 'Data Presma Baru Disimpan!');
+            return redirect()->route('presma-fk.index');
+        }
 
-        PresmaFK::Create($data_presma);
-        Alert::success('Berhasil', 'Data Presma Baru Disimpan!');
-        return redirect()->route('presma-fk.index');
     }
 
     public function edit($id)
     {
-        $data = DB::table('presmafk')->where('id', '=', $id)->first();
+        $data = $this->presmaFKRepository->getByPrimaryKey($id);
         return view('admin.kedokteran.presma.edit', compact('id', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(PresmaRequest $request, $id)
     {
-        $rules = [
-            'nama' => 'string',
-            'prodi' => 'string',
-            'nourut' => 'numeric',
-            'angkatan' => 'numeric',
-            'foto' => 'image|file|max:5024'
-        ];
-
-        $validatedData = $request->validate($rules);
-
-        if ($request->file('foto')) {
-            if ($request->oldFoto) {
-                Storage::delete($request->oldFoto);
-            }
-            $validatedData['foto'] = $request->file('foto')->store('foto-presma-fk');
-        }
-        $validatedData['nama'] = $request->nama;
-        $validatedData['prodi'] = $request->prodi;
-        $validatedData['nourut'] = $request->nourut;
-        $validatedData['angkatan'] = $request->angkatan;
-
-        PresmaFK::where('id', $id)->update($validatedData);
-
+        $oldFoto = $request['oldFoto'];
+        $oldFotoWakil = $request['oldFotoWakil'];
+        $validatedData = $request->store($oldFoto,$oldFotoWakil);
+        $this->presmaFKRepository->updateByPrimaryKey($id,$validatedData);
 
         Alert::success('Berhasil', 'Data Presma Berhasil di update!');
         return redirect()->route('presma-fk.index');
     }
 
-
     public function destroy($id)
     {
+
+
         try {
-            $data = PresmaFK::find($id);
+            $data = $this->presmaFKRepository->getAllData([
+                'find' => $id
+            ]);
+
             if ($data['foto']) {
                 Storage::delete($data['foto']);
             }
-            PresmaFK::destroy($id);
+            if ($data['foto_wakil']) {
+                Storage::delete($data['foto_wakil']);
+            }
+            $this->presmaFKRepository->deleteByPrimaryKey($id);
             Alert::success('Berhasil', 'Data Presma berhasil dihapus!');
             return redirect()->route('presma-fk.index');
         } catch (\Exception $e) {
@@ -114,7 +122,7 @@ class AdminFK extends Controller
 
     public function RecordPSKED()
     {
-        $datapemilih = DB::table('mahasiswapskeds')->get();
+        $datapemilih = $this->pskedRepository->getAllData();
         return view('admin.kedokteran.recordPSKED', compact('datapemilih'));
     }
 
@@ -125,13 +133,13 @@ class AdminFK extends Controller
 
     public function Recordpskb()
     {
-        $datapemilih = DB::table('mahasiswapskbs')->get();
+        $datapemilih = $this->pskbsRepository->getAllData();
         return view('admin.kedokteran.recordPSKB', compact('datapemilih'));
     }
 
     public function Recordpssf()
     {
-        $datapemilih = DB::table('mahasiswapssfs')->get();
+        $datapemilih = $this->pssfRepository->getAllData();
         return view('admin.kedokteran.recordPSSF', compact('datapemilih'));
     }
 

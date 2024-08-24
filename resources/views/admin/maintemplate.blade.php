@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 
 </head>
 
@@ -305,13 +307,14 @@
                     </li>
                 @endif
             @endif
+
             @if ($userPRODI == 'Profesi Dokter' ||
                 $userPRODI == 'S1 Profesi Bidan' ||
                 $userPRODI == 'Profesi Apoteker' ||
                 $userPRODI == 'Kedokteran' ||
                 $userPRODI == 'Kebidanan' ||
                 $userPRODI == 'Farmasi' ||
-                $userPRODI == 'Elektro')
+                $userPRODI == 'Dekan FK')
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
                     Fakultas Kedokteran
@@ -328,7 +331,7 @@
                         <span>DPM FK</span>
                     </a>
                 </li>
-            @elseif($userPRODI == 'PSIGL' || $userPRODI == 'PSIGB' || $userPRODI == 'PSIKL' || $userPRODI == 'PSIKB')
+            @elseif($userPRODI == 'Kajur Farmasi' || $userPRODI == 'PSIGB' || $userPRODI == 'PSIKL' || $userPRODI == 'PSIKB')
                 <hr class="sidebar-divider">
                 <div class="sidebar-heading">
                     Fakultas Ilmu Kesehatan

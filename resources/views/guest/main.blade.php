@@ -41,10 +41,10 @@
             </span>
             <p class="hero"
                 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-weight:100">
-                PEMILWA FK FIKES UB 2022
+                PEMILWA FK UB
             </p>
             <p class="moto"
-                style="letter-spacing:2px; font-family:Montserrat,Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-weight:900">
+                style="letter-spacing:2px; font-family:Montserrat,Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
                 Kredibilitas, Optimal, Sinergis, Tanggap, Etis, Aktualitas</p>
         </center>
 

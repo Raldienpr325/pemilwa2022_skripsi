@@ -45,7 +45,7 @@
                 series: [{
                     name: 'Hasil',
                     colorByPoint: true,
-                    data: {!! json_encode($tampung) !!}
+                    data: {!! json_encode($operation['tampung']) !!}
                 }]
             });
         })

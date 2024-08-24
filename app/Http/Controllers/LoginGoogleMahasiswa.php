@@ -28,12 +28,12 @@ class LoginGoogleMahasiswa extends Controller
 
     public function HandleCallbackGoogle(Request $request)
     {
+
         try {
             $user_google = Socialite::driver('google')->user();
             $domain_email = explode("@", $user_google->user['email']);
 
             if ($domain_email[1] == "student.ub.ac.id") {
-
 
                 if (Auth::guard('user')->attempt([
                     'email' => $user_google->user['email'],
@@ -80,12 +80,12 @@ class LoginGoogleMahasiswa extends Controller
         //cek apakah nim milik fk
         // NIM FK:
         //=============
-        // (PSKED) 
+        // (PSKED)
         // 205070100111026
         // 215070101111037
         // 225070100111001
 
-        // (PSSF) 
+        // (PSSF)
         // 195070501111001
         // 215070501111018
         // 225070500111016
@@ -294,7 +294,7 @@ class LoginGoogleMahasiswa extends Controller
         //         HasilVotingFikes::firstOrCreate([
         //             'users_id' => auth('user')->user()->id,
         //         ], ['users_id' => auth('user')->user()->id,]);
-                
+
         //         Mahasiswapsigl::Create([
         //             'name' => auth('user')->user()->name,
         //             'email' =>auth('user')->user()->email,
@@ -329,7 +329,7 @@ class LoginGoogleMahasiswa extends Controller
         //         HasilVotingFikes::firstOrCreate([
         //             'users_id' => auth('user')->user()->id,
         //         ], ['users_id' => auth('user')->user()->id,]);
-                
+
         //         Mahasiswapsigb::Create([
         //             'name' => auth('user')->user()->name,
         //             'email' =>auth('user')->user()->email,
@@ -363,7 +363,7 @@ class LoginGoogleMahasiswa extends Controller
         //         HasilVotingFikes::firstOrCreate([
         //             'users_id' => auth('user')->user()->id,
         //         ], ['users_id' => auth('user')->user()->id,]);
-                
+
         //         Mahasiswapsikl::Create([
         //             'name' => auth('user')->user()->name,
         //             'email' =>auth('user')->user()->email,
@@ -398,7 +398,7 @@ class LoginGoogleMahasiswa extends Controller
         //             'users_id' => auth('user')->user()->id,
         //         ], ['users_id' => auth('user')->user()->id,]);
 
-                
+
         //         Mahasiswapsikb::Create([
         //             'name' => auth('user')->user()->name,
         //             'email' =>auth('user')->user()->email,

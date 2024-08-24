@@ -9,5 +9,5 @@ class PresmaFikes extends Model
 {
     use HasFactory;
     protected $table = "presma_fikes";
-    protected $fillable = ['nourut', 'nama', 'prodi', 'angkatan', 'foto'];
+    protected $fillable = ['nourut', 'nama', 'prodi', 'angkatan', 'foto','nama_wakil','foto_wakil'];
 }

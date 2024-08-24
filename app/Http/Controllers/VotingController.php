@@ -9,6 +9,7 @@ use App\Models\HasilVotingFk;
 use App\Models\PresmaFikes;
 use App\Models\PresmaFK;
 use RealRashid\SweetAlert\Facades\Alert;
+use Stevebauman\Purify\Facades\Purify;
 
 class VotingController extends Controller
 {
@@ -149,5 +150,41 @@ class VotingController extends Controller
 
         Alert::success('Berhasil', 'Voting DPM Berhasil');
         return redirect()->route('votingDpmFikes');
+    }
+
+    public function searchPresmaById($id){
+        $data = PresmaFK::find($id);
+        if ($data) {
+            return response()->json($data);
+        } else {
+            return response()->json(['message' => 'Presma not found'], 404);
+        }
+    }
+
+    public function searchDpmFK($id){
+        $data = DpmFK::find($id);
+        if ($data) {
+            return response()->json($data);
+        } else {
+            return response()->json(['message' => 'Presma not found'], 404);
+        }
+    }
+
+    public function searchPresmaFikesById($id){
+        $data = PresmaFikes::find($id);
+        if ($data) {
+            return response()->json($data);
+        } else {
+            return response()->json(['message' => 'Presma not found'], 404);
+        }
+    }
+
+    public function searchDpmFikes($id){
+        $data = DpmFikes::find($id);
+        if ($data) {
+            return response()->json($data);
+        } else {
+            return response()->json(['message' => 'Presma not found'], 404);
+        }
     }
 }

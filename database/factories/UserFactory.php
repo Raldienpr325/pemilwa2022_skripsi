@@ -18,10 +18,16 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'given_name' => $this->faker->firstName,
+            'family_name' => $this->faker->lastName,
+            'hd' => $this->faker->domainName,
+            'NIM' => $this->faker->unique()->numberBetween(100000000, 999999999),
+            'prodi' => $this->faker->randomElement(['Prodi A', 'Prodi B', 'Prodi C']),
+            'password' => bcrypt('password'),
+            'pilihan_presma' => $this->faker->randomElement(['A', 'B', 'C']),
+            'pilihan_DPM' => $this->faker->randomElement(['X', 'Y', 'Z']),
             'remember_token' => Str::random(10),
         ];
     }

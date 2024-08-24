@@ -32,13 +32,13 @@
 
         <div class="login">
             <div class="container">
-                <h1 style="font-family: Nunito, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-weight:800">
-                    Masukkan NIM anda</h1>
-                <p
-                    style="font-family: Nunito, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-weight:600;color:red">
-                    *
-                    Jika NIM yang anda masukkan tidak sesuai maka hasil suara
-                    dianggap tidak sah</p>
+                <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 800; color: #333333;">
+                    Masukkan NIM Anda
+                </h1>
+                <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 600; color: red;">
+                    * Jika NIM yang Anda masukkan tidak sesuai, maka hasil suara dianggap tidak sah
+                </p>
+
                 <div class="login-form">
                     <form method="post" action="{{ route('handle-ceknim') }}">
                         @csrf
